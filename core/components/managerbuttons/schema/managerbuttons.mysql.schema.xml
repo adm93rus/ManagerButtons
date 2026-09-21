@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="ManagerButtons\Model" baseClass="xPDO\Om\xPDOObject" platform="mysql" defaultEngine="InnoDB" version="3.0">
+    <object class="ButtonGroup" table="managerbuttons_groups" extends="xPDO\Om\xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="rank" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="createdby" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <index alias="rank" name="rank" primary="false" unique="false" type="BTREE">
+            <column key="rank" length="" collation="A" null="false" />
+        </index>
+        <composite alias="Buttons" class="ManagerButtons\Model\Button" local="id" foreign="group_id" cardinality="many" owner="local" />
+        <composite alias="UserGroups" class="ManagerButtons\Model\GroupUserGroup" local="id" foreign="group_id" cardinality="many" owner="local" />
+    </object>
+    <object class="Button" table="managerbuttons_buttons" extends="xPDO\Om\xPDOSimpleObject">
+        <field key="group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="url" dbtype="varchar" precision="2048" phptype="string" null="false" default="" />
+        <field key="icon" dbtype="varchar" precision="128" phptype="string" null="false" default="" />
+        <field key="cols" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="1" />
+        <field key="rank" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <index alias="group_id" name="group_id" primary="false" unique="false" type="BTREE">
+            <column key="group_id" length="" collation="A" null="false" />
+        </index>
+        <index alias="group_rank" name="group_rank" primary="false" unique="false" type="BTREE">
+            <column key="group_id" length="" collation="A" null="false" />
+            <column key="rank" length="" collation="A" null="false" />
+        </index>
+        <aggregate alias="Group" class="ManagerButtons\Model\ButtonGroup" local="group_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+    <object class="GroupUserGroup" table="managerbuttons_group_usergroups" extends="xPDO\Om\xPDOSimpleObject">
+        <field key="group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="usergroup_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <index alias="group_usergroup" name="group_usergroup" primary="false" unique="true" type="BTREE">
+            <column key="group_id" length="" collation="A" null="false" />
+            <column key="usergroup_id" length="" collation="A" null="false" />
+        </index>
+        <aggregate alias="Group" class="ManagerButtons\Model\ButtonGroup" local="group_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="UserGroup" class="MODX\Revolution\modUserGroup" local="usergroup_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+</model>

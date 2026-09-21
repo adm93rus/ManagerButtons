@@ -1,0 +1,72 @@
+<?php
+
+$_lang['ManagerButtons'] = 'ManagerButtons';
+$_lang['managerbuttons'] = 'ManagerButtons';
+$_lang['managerbuttons_menu_desc'] = 'Наборы кнопок и ссылок для панели управления';
+$_lang['managerbuttons.widget'] = 'ManagerButtons';
+$_lang['managerbuttons.widget_desc'] = 'Показывает наборы кнопок, доступные текущему пользователю';
+$_lang['managerbuttons_error'] = 'Ошибка';
+$_lang['managerbuttons_success'] = 'Готово';
+$_lang['managerbuttons_vuetools_required'] = 'Нужен VueTools 1.2.0 или новее. Установите его через Приложения → Установщик.';
+
+$_lang['managerbuttons_groups'] = 'Группы кнопок';
+$_lang['managerbuttons_group'] = 'Группа';
+$_lang['managerbuttons_group_create'] = 'Создать группу';
+$_lang['managerbuttons_group_update'] = 'Изменить группу';
+$_lang['managerbuttons_group_remove'] = 'Удалить группу';
+$_lang['managerbuttons_group_remove_confirm'] = 'Удалить группу и все её кнопки?';
+$_lang['managerbuttons_group_created'] = 'Группа создана';
+$_lang['managerbuttons_group_updated'] = 'Группа сохранена';
+$_lang['managerbuttons_group_removed'] = 'Группа удалена';
+$_lang['managerbuttons_group_duplicated'] = 'Группа продублирована';
+$_lang['managerbuttons_group_imported'] = 'Группа импортирована';
+$_lang['managerbuttons_group_export'] = 'Экспорт';
+$_lang['managerbuttons_group_import'] = 'Импорт';
+$_lang['managerbuttons_group_duplicate'] = 'Дублировать';
+$_lang['managerbuttons_copy_suffix'] = ' (копия)';
+
+$_lang['managerbuttons_name'] = 'Название';
+$_lang['managerbuttons_url'] = 'Ссылка';
+$_lang['managerbuttons_icon'] = 'Иконка';
+$_lang['managerbuttons_cols'] = 'Колонки';
+$_lang['managerbuttons_cols_help'] = 'Ширина в сетке из 4 колонок';
+$_lang['managerbuttons_usergroups'] = 'Группы пользователей';
+$_lang['managerbuttons_usergroups_help'] = 'Кто видит этот набор на панели управления. Администраторы имеют доступ всегда.';
+$_lang['managerbuttons_usergroups_empty'] = 'Только администраторы (по умолчанию)';
+$_lang['managerbuttons_buttons'] = 'Кнопки';
+$_lang['managerbuttons_buttons_count'] = 'Кнопок';
+$_lang['managerbuttons_button_create'] = 'Добавить кнопку';
+$_lang['managerbuttons_button_update'] = 'Изменить кнопку';
+$_lang['managerbuttons_button_remove'] = 'Удалить кнопку';
+$_lang['managerbuttons_button_remove_confirm'] = 'Удалить эту кнопку?';
+$_lang['managerbuttons_button_created'] = 'Кнопка создана';
+$_lang['managerbuttons_button_updated'] = 'Кнопка сохранена';
+$_lang['managerbuttons_button_removed'] = 'Кнопка удалена';
+$_lang['managerbuttons_button_preview'] = 'Предпросмотр';
+$_lang['managerbuttons_icon_search'] = 'Найти иконку';
+$_lang['managerbuttons_icon_custom'] = 'Или укажите класс Font Awesome 5';
+$_lang['managerbuttons_url_placeholder'] = '?a=resource/create или https://example.com';
+
+$_lang['managerbuttons_import_title'] = 'Импорт набора кнопок';
+$_lang['managerbuttons_import_help'] = 'Вставьте JSON-экспорт или выберите файл .json. На этом сайте будет создана новая группа.';
+$_lang['managerbuttons_import_file'] = 'Файл JSON';
+$_lang['managerbuttons_search'] = 'Поиск';
+$_lang['managerbuttons_actions'] = 'Действия';
+$_lang['managerbuttons_save'] = 'Сохранить';
+$_lang['managerbuttons_cancel'] = 'Отмена';
+$_lang['managerbuttons_close'] = 'Закрыть';
+$_lang['managerbuttons_empty'] = 'Нет записей';
+$_lang['managerbuttons_widget_empty'] = 'Нет наборов кнопок, доступных вашим группам пользователей.';
+$_lang['managerbuttons_drag'] = 'Перетащите, чтобы изменить порядок';
+
+$_lang['managerbuttons_err_ns'] = 'Не хватает данных.';
+$_lang['managerbuttons_err_name'] = 'Укажите название группы.';
+$_lang['managerbuttons_err_name_ae'] = 'Группа с таким названием уже есть.';
+$_lang['managerbuttons_err_group_nf'] = 'Группа не найдена.';
+$_lang['managerbuttons_err_group_ns'] = 'Выберите группу.';
+$_lang['managerbuttons_err_button_nf'] = 'Кнопка не найдена.';
+$_lang['managerbuttons_err_button_fields'] = 'Укажите название и ссылку.';
+$_lang['managerbuttons_err_save'] = 'Не удалось сохранить запись.';
+$_lang['managerbuttons_err_remove'] = 'Не удалось удалить запись.';
+$_lang['managerbuttons_err_import_empty'] = 'Вставьте JSON или выберите файл.';
+$_lang['managerbuttons_err_import_format'] = 'Некорректный JSON экспорта ManagerButtons.';

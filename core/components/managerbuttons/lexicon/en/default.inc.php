@@ -1,0 +1,72 @@
+<?php
+
+$_lang['ManagerButtons'] = 'ManagerButtons';
+$_lang['managerbuttons'] = 'ManagerButtons';
+$_lang['managerbuttons_menu_desc'] = 'Groups of buttons and links for the manager dashboard';
+$_lang['managerbuttons.widget'] = 'ManagerButtons';
+$_lang['managerbuttons.widget_desc'] = 'Shows button groups available to the current user';
+$_lang['managerbuttons_error'] = 'Error';
+$_lang['managerbuttons_success'] = 'Success';
+$_lang['managerbuttons_vuetools_required'] = 'VueTools 1.2.0 or newer is required. Install it from Extras → Installer.';
+
+$_lang['managerbuttons_groups'] = 'Button groups';
+$_lang['managerbuttons_group'] = 'Group';
+$_lang['managerbuttons_group_create'] = 'Create group';
+$_lang['managerbuttons_group_update'] = 'Edit group';
+$_lang['managerbuttons_group_remove'] = 'Delete group';
+$_lang['managerbuttons_group_remove_confirm'] = 'Delete this group and all of its buttons?';
+$_lang['managerbuttons_group_created'] = 'Group created';
+$_lang['managerbuttons_group_updated'] = 'Group updated';
+$_lang['managerbuttons_group_removed'] = 'Group deleted';
+$_lang['managerbuttons_group_duplicated'] = 'Group duplicated';
+$_lang['managerbuttons_group_imported'] = 'Group imported';
+$_lang['managerbuttons_group_export'] = 'Export';
+$_lang['managerbuttons_group_import'] = 'Import';
+$_lang['managerbuttons_group_duplicate'] = 'Duplicate';
+$_lang['managerbuttons_copy_suffix'] = ' (copy)';
+
+$_lang['managerbuttons_name'] = 'Name';
+$_lang['managerbuttons_url'] = 'Link';
+$_lang['managerbuttons_icon'] = 'Icon';
+$_lang['managerbuttons_cols'] = 'Columns';
+$_lang['managerbuttons_cols_help'] = 'Width in the 4-column grid';
+$_lang['managerbuttons_usergroups'] = 'User groups';
+$_lang['managerbuttons_usergroups_help'] = 'Who can see this set on the dashboard. Administrators always have access.';
+$_lang['managerbuttons_usergroups_empty'] = 'Administrators only (default)';
+$_lang['managerbuttons_buttons'] = 'Buttons';
+$_lang['managerbuttons_buttons_count'] = 'Buttons';
+$_lang['managerbuttons_button_create'] = 'Add button';
+$_lang['managerbuttons_button_update'] = 'Edit button';
+$_lang['managerbuttons_button_remove'] = 'Delete button';
+$_lang['managerbuttons_button_remove_confirm'] = 'Delete this button?';
+$_lang['managerbuttons_button_created'] = 'Button created';
+$_lang['managerbuttons_button_updated'] = 'Button updated';
+$_lang['managerbuttons_button_removed'] = 'Button deleted';
+$_lang['managerbuttons_button_preview'] = 'Preview';
+$_lang['managerbuttons_icon_search'] = 'Search icon';
+$_lang['managerbuttons_icon_custom'] = 'Or type a Font Awesome 5 class';
+$_lang['managerbuttons_url_placeholder'] = '?a=resource/create or https://example.com';
+
+$_lang['managerbuttons_import_title'] = 'Import a button set';
+$_lang['managerbuttons_import_help'] = 'Paste a JSON export or choose a .json file. A new group will be created on this site.';
+$_lang['managerbuttons_import_file'] = 'JSON file';
+$_lang['managerbuttons_search'] = 'Search';
+$_lang['managerbuttons_actions'] = 'Actions';
+$_lang['managerbuttons_save'] = 'Save';
+$_lang['managerbuttons_cancel'] = 'Cancel';
+$_lang['managerbuttons_close'] = 'Close';
+$_lang['managerbuttons_empty'] = 'No records';
+$_lang['managerbuttons_widget_empty'] = 'There are no button groups available for your user groups.';
+$_lang['managerbuttons_drag'] = 'Drag to reorder';
+
+$_lang['managerbuttons_err_ns'] = 'Required data is missing.';
+$_lang['managerbuttons_err_name'] = 'Enter a group name.';
+$_lang['managerbuttons_err_name_ae'] = 'A group with this name already exists.';
+$_lang['managerbuttons_err_group_nf'] = 'Group not found.';
+$_lang['managerbuttons_err_group_ns'] = 'Select a group.';
+$_lang['managerbuttons_err_button_nf'] = 'Button not found.';
+$_lang['managerbuttons_err_button_fields'] = 'Enter a name and a link.';
+$_lang['managerbuttons_err_save'] = 'Could not save the record.';
+$_lang['managerbuttons_err_remove'] = 'Could not delete the record.';
+$_lang['managerbuttons_err_import_empty'] = 'Paste JSON or choose a file.';
+$_lang['managerbuttons_err_import_format'] = 'Invalid ManagerButtons export JSON.';
