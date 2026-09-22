@@ -132,7 +132,7 @@ onMounted(() => {
     :header="group ? `${_('managerbuttons_buttons')}: ${group.name}` : _('managerbuttons_buttons')"
     :style="{ width: '64rem' }"
   >
-    <Toolbar>
+    <Toolbar style="margin-bottom: 1rem;">
       <template #start>
         <Button :label="_('managerbuttons_button_create')" icon="pi pi-plus" severity="success" @click="openCreate" />
       </template>

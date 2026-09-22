@@ -71,7 +71,7 @@ if ($dashboard && $widget) {
     if (!$exists) {
         $c = $modx->newQuery(modDashboardWidgetPlacement::class);
         $c->where(['dashboard' => $dashboard->get('id')]);
-        $c->select('MAX(rank)');
+        $c->select('MAX(' . $modx->escape('rank') . ')');
         $max = (int) $modx->getValue($c->prepare());
         $placement = $modx->newObject(modDashboardWidgetPlacement::class);
         $data = [

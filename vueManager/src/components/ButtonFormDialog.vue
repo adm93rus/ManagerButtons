@@ -45,26 +45,26 @@ function save() {
     :header="button?.id ? _('managerbuttons_button_update') : _('managerbuttons_button_create')"
     :style="{ width: '46rem' }"
   >
-    <div style="display: grid; gap: 1rem;">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-        <div>
-          <label>{{ _('managerbuttons_name') }} *</label>
+    <div style="display: flex; flex-direction: column; gap: 1.25rem; padding-top: 1rem;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+          <label style="font-weight: 700;">{{ _('managerbuttons_name') }} *</label>
           <InputText v-model="form.name" fluid autofocus />
         </div>
-        <div>
-          <label>{{ _('managerbuttons_url') }} *</label>
+        <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+          <label style="font-weight: 700;">{{ _('managerbuttons_url') }} *</label>
           <InputText v-model="form.url" fluid :placeholder="_('managerbuttons_url_placeholder')" />
         </div>
       </div>
-      <div>
-        <label>{{ _('managerbuttons_cols') }}</label>
-        <SelectButton v-model="form.cols" :options="[1, 2, 3, 4]" :allowEmpty="false" />
-        <small>{{ _('managerbuttons_cols_help') }}</small>
-      </div>
-      <div>
-        <label>{{ _('managerbuttons_icon') }}</label>
+      <Fieldset :legend="_('managerbuttons_cols')">
+        <div style="display: flex; flex-direction: column; gap: 0.375rem; align-items: flex-start;">
+          <SelectButton v-model="form.cols" :options="[1, 2, 3, 4]" :allowEmpty="false" />
+          <small style="color: var(--p-text-muted-color);">{{ _('managerbuttons_cols_help') }}</small>
+        </div>
+      </Fieldset>
+      <Fieldset :legend="_('managerbuttons_icon')">
         <IconPicker v-model="form.icon" v-model:query="iconQuery" :icons="icons" />
-      </div>
+      </Fieldset>
     </div>
     <template #footer>
       <Button :label="_('managerbuttons_cancel')" severity="secondary" text @click="dialogVisible = false" />

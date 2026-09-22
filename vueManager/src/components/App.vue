@@ -181,7 +181,7 @@ onMounted(async () => {
   <div class="managerbuttons-app">
     <Toast />
     <ConfirmDialog />
-    <Toolbar>
+    <Toolbar style="margin-bottom: 1rem;">
       <template #start>
         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
           <Button :label="_('managerbuttons_group_create')" icon="pi pi-plus" severity="success" @click="openCreate" />

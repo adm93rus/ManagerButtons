@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1-pl] - 2026-09-22
+
+### Fixed
+- Groups saved to the database stayed out of the list on MySQL 8 and MariaDB: rank is reserved, and unquoted ORDER BY rank / MAX(rank) failed
+- Manager page padding, toolbar spacing, and create dialogs follow the VueTools sample
+
 ## [1.1.0-pl] - 2026-09-22
 
 ### Added

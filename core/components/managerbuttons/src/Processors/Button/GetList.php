@@ -15,8 +15,7 @@ class GetList extends ProcessorBase
         }
         $c = $this->modx->newQuery(Button::class);
         $c->where(['group_id' => $groupId]);
-        $c->sortby('rank', 'ASC');
-        $c->sortby('id', 'ASC');
+        $this->service->applyRankOrder($c);
         $rows = [];
         foreach ($this->modx->getIterator(Button::class, $c) as $button) {
             $rows[] = [
