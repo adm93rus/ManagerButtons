@@ -24,7 +24,7 @@ class GetList extends ProcessorBase
                 'group_id' => (int) $button->get('group_id'),
                 'name' => (string) $button->get('name'),
                 'url' => (string) $button->get('url'),
-                'icon' => (string) $button->get('icon'),
+                'icon' => \ManagerButtons\Icons::normalizeName((string) $button->get('icon')),
                 'icon_class' => \ManagerButtons\Icons::cssClass((string) $button->get('icon')),
                 'cols' => $this->service->normalizeCols($button->get('cols')),
                 'rank' => (int) $button->get('rank'),

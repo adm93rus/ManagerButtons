@@ -22,14 +22,19 @@ watch(
     form.name = props.button?.name || ''
     form.url = props.button?.url || ''
     form.icon = props.button?.icon || 'link'
-    form.cols = props.button?.cols || 1
+    form.cols = Number(props.button?.cols) || 1
     iconQuery.value = ''
   }
 )
 watch(dialogVisible, (v) => emit('update:visible', v))
 
 function save() {
-  emit('save', { ...form, cols: Number(form.cols) || 1 })
+  emit('save', {
+    name: form.name.trim(),
+    url: form.url.trim(),
+    icon: form.icon,
+    cols: Number(form.cols) || 1,
+  })
 }
 </script>
 
@@ -38,29 +43,31 @@ function save() {
     v-model:visible="dialogVisible"
     modal
     :header="button?.id ? _('managerbuttons_button_update') : _('managerbuttons_button_create')"
-    :style="{ width: '42rem' }"
+    :style="{ width: '46rem' }"
   >
-    <div class="p-fluid" style="display: grid; gap: 1rem;">
-      <div>
-        <label class="font-bold">{{ _('managerbuttons_name') }}</label>
-        <InputText v-model="form.name" autofocus />
+    <div style="display: grid; gap: 1rem;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div>
+          <label>{{ _('managerbuttons_name') }} *</label>
+          <InputText v-model="form.name" fluid autofocus />
+        </div>
+        <div>
+          <label>{{ _('managerbuttons_url') }} *</label>
+          <InputText v-model="form.url" fluid :placeholder="_('managerbuttons_url_placeholder')" />
+        </div>
       </div>
       <div>
-        <label class="font-bold">{{ _('managerbuttons_url') }}</label>
-        <InputText v-model="form.url" :placeholder="_('managerbuttons_url_placeholder')" />
-      </div>
-      <div>
-        <label class="font-bold">{{ _('managerbuttons_cols') }}</label>
+        <label>{{ _('managerbuttons_cols') }}</label>
         <SelectButton v-model="form.cols" :options="[1, 2, 3, 4]" :allowEmpty="false" />
         <small>{{ _('managerbuttons_cols_help') }}</small>
       </div>
       <div>
-        <label class="font-bold">{{ _('managerbuttons_icon') }}</label>
+        <label>{{ _('managerbuttons_icon') }}</label>
         <IconPicker v-model="form.icon" v-model:query="iconQuery" :icons="icons" />
       </div>
     </div>
     <template #footer>
-      <Button :label="_('managerbuttons_cancel')" severity="secondary" @click="dialogVisible = false" />
+      <Button :label="_('managerbuttons_cancel')" severity="secondary" text @click="dialogVisible = false" />
       <Button
         :label="_('managerbuttons_save')"
         severity="success"

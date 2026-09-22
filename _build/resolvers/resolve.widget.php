@@ -36,6 +36,21 @@ if (!$widget) {
         'lexicon' => 'managerbuttons:default',
         'size' => 'full',
     ], '', true);
+    $widget->set('properties', ['group_id' => '']);
+    $widget->save();
+}
+
+$props = $widget ? $widget->get('properties') : null;
+if (is_string($props)) {
+    $decoded = json_decode($props, true);
+    $props = is_array($decoded) ? $decoded : [];
+}
+if ($widget && !is_array($props)) {
+    $props = [];
+}
+if ($widget && !array_key_exists('group_id', $props)) {
+    $props['group_id'] = '';
+    $widget->set('properties', $props);
     $widget->save();
 }
 

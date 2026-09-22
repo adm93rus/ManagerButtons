@@ -18,10 +18,12 @@ const userGroups = ref([])
 const icons = ref([])
 const loading = ref(false)
 const query = ref('')
+const selected = ref([])
 const groupDialog = ref(false)
 const buttonsDialog = ref(false)
 const importDialog = ref(false)
 const current = ref(null)
+let searchTimer = 0
 
 function notifyError(error) {
   toast.add({
@@ -49,6 +51,7 @@ async function loadGroups() {
       limit: 0,
     })
     groups.value = res.results || []
+    selected.value = []
   } catch (error) {
     notifyError(error)
   } finally {
@@ -63,6 +66,11 @@ async function loadLookups() {
   ])
   userGroups.value = ug.results || []
   icons.value = ic.results || []
+}
+
+function onSearch() {
+  window.clearTimeout(searchTimer)
+  searchTimer = window.setTimeout(loadGroups, 250)
 }
 
 function openCreate() {
@@ -94,15 +102,21 @@ async function saveGroup(form) {
   }
 }
 
-function askRemove(row) {
+function askRemove(rows) {
+  const list = Array.isArray(rows) ? rows : [rows]
+  if (!list.length) return
   confirm.require({
-    message: _('managerbuttons_group_remove_confirm'),
+    message: list.length > 1 ? _('managerbuttons_group_remove_selected') : _('managerbuttons_group_remove_confirm'),
     header: _('managerbuttons_group_remove'),
     icon: 'pi pi-exclamation-triangle',
+    acceptLabel: _('managerbuttons_yes'),
+    rejectLabel: _('managerbuttons_cancel'),
     acceptClass: 'p-button-danger',
     accept: async () => {
       try {
-        const res = await post('ManagerButtons\\Processors\\Group\\Remove', { id: row.id })
+        const res = await post('ManagerButtons\\Processors\\Group\\Remove', {
+          ids: list.map((row) => row.id),
+        })
         notifyOk(res.message)
         await loadGroups()
       } catch (error) {
@@ -144,6 +158,9 @@ async function importGroup(payload) {
 }
 
 async function onReorder(event) {
+  if (query.value.trim()) {
+    return
+  }
   groups.value = event.value
   try {
     await post('ManagerButtons\\Processors\\Group\\Sort', {
@@ -164,36 +181,60 @@ onMounted(async () => {
   <div class="managerbuttons-app">
     <Toast />
     <ConfirmDialog />
-    <Toolbar class="mb-3">
+    <Toolbar>
       <template #start>
-        <Button :label="_('managerbuttons_group_create')" icon="pi pi-plus" severity="success" @click="openCreate" />
-        <Button :label="_('managerbuttons_group_import')" icon="pi pi-upload" severity="secondary" class="ml-2" @click="importDialog = true" />
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+          <Button :label="_('managerbuttons_group_create')" icon="pi pi-plus" severity="success" @click="openCreate" />
+          <Button :label="_('managerbuttons_group_import')" icon="pi pi-upload" severity="secondary" outlined @click="importDialog = true" />
+          <Button
+            :label="_('managerbuttons_group_remove')"
+            icon="pi pi-trash"
+            severity="danger"
+            :disabled="!selected.length"
+            @click="askRemove(selected)"
+          />
+        </div>
       </template>
       <template #end>
         <IconField>
           <InputIcon class="pi pi-search" />
-          <InputText v-model="query" :placeholder="_('managerbuttons_search')" @keyup.enter="loadGroups" />
+          <InputText v-model="query" :placeholder="_('managerbuttons_search')" @input="onSearch" @keyup.enter="loadGroups" />
         </IconField>
       </template>
     </Toolbar>
-    <DataTable :value="groups" dataKey="id" :loading="loading" stripedRows reorderableRows @row-reorder="onReorder">
-      <Column rowReorder headerStyle="width: 3rem" />
+    <DataTable
+      v-model:selection="selected"
+      :value="groups"
+      dataKey="id"
+      :loading="loading"
+      stripedRows
+      paginator
+      :rows="20"
+      :rowsPerPageOptions="[10, 20, 50]"
+      :alwaysShowPaginator="false"
+      reorderableRows
+      @row-reorder="onReorder"
+    >
+      <Column selectionMode="multiple" headerStyle="width: 3rem" />
+      <Column v-if="!query.trim()" rowReorder headerStyle="width: 3rem" />
       <Column field="name" :header="_('managerbuttons_name')" sortable />
       <Column :header="_('managerbuttons_usergroups')">
         <template #body="{ data }">
-          <template v-if="data.usergroup_names?.length">
-            <Tag v-for="name in data.usergroup_names" :key="name" :value="name" class="mr-1 mb-1" />
-          </template>
-          <Tag v-else :value="_('managerbuttons_usergroups_empty')" severity="secondary" />
+          <div style="display: flex; flex-wrap: wrap; gap: 0.35rem;">
+            <template v-if="data.usergroup_names?.length">
+              <Tag v-for="name in data.usergroup_names" :key="name" :value="name" />
+            </template>
+            <Tag v-else :value="_('managerbuttons_usergroups_empty')" severity="secondary" />
+          </div>
         </template>
       </Column>
       <Column field="buttons_count" :header="_('managerbuttons_buttons_count')" style="width: 8rem" />
-      <Column :header="_('managerbuttons_actions')" style="width: 16rem">
+      <Column :header="_('managerbuttons_actions')" style="width: 14rem">
         <template #body="{ data }">
           <Button icon="pi pi-th-large" severity="secondary" text rounded :title="_('managerbuttons_buttons')" @click="openButtons(data)" />
           <Button icon="pi pi-pencil" severity="secondary" text rounded :title="_('managerbuttons_group_update')" @click="openEdit(data)" />
-          <Button icon="pi pi-download" severity="secondary" text rounded :title="_('managerbuttons_group_export')" @click="exportGroup(data)" />
           <Button icon="pi pi-copy" severity="secondary" text rounded :title="_('managerbuttons_group_duplicate')" @click="duplicate(data)" />
+          <Button icon="pi pi-download" severity="secondary" text rounded :title="_('managerbuttons_group_export')" @click="exportGroup(data)" />
           <Button icon="pi pi-trash" severity="danger" text rounded :title="_('managerbuttons_group_remove')" @click="askRemove(data)" />
         </template>
       </Column>

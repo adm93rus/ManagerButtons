@@ -14,8 +14,9 @@ Requirements
 - VueTools 1.2.0+ (theme support)
 
 Install VueTools first, then ManagerButtons, from Extras → Installer
-(upload the transport zip). After install, add the widget to a dashboard
-if it is not already on Default.
+(upload the transport zip). Sign in again if the menu item is missing:
+setup adds the managerbuttons permission to the Administrator policy.
+The widget is placed on the Default dashboard.
 
 Repository: https://github.com/adm93rus/ManagerButtons
 Documentation: https://docs.modx.pro/components/managerbuttons

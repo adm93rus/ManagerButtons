@@ -13,13 +13,15 @@
 ## Установка
 
 1. Установите VueTools.
-2. Скачайте `ManagerButtons-1.0.0-pl.transport.zip` из [`_packages/`](_packages/).
+2. Скачайте `ManagerButtons-1.1.0-pl.transport.zip` из [`_packages/`](_packages/).
 3. В менеджере: **Приложения → Установщик → Загрузить пакет** и установите zip.
 
 После установки:
 
-- пункт меню **ManagerButtons**;
+- пункт меню **ManagerButtons** (администраторы и право `managerbuttons`);
 - виджет **ManagerButtons** (ставится на дашборд Default).
+
+Если пункта меню нет, выйдите из панели и войдите снова: право записывается в политику Administrator во время установки.
 
 ## Сборка пакета новой версии
 

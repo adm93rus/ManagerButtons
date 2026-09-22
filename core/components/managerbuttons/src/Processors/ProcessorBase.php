@@ -23,7 +23,11 @@ abstract class ProcessorBase extends Processor
 
     public function checkPermissions()
     {
-        return $this->modx->user && $this->modx->user->hasSessionContext('mgr');
+        if (!$this->modx->user || !$this->modx->user->hasSessionContext('mgr')) {
+            return false;
+        }
+
+        return (new Service($this->modx))->canManage();
     }
 
     /**

@@ -10,6 +10,6 @@ return [
         'icon' => '',
         'params' => '',
         'handler' => '',
-        'permissions' => '',
+        'permissions' => 'managerbuttons',
     ],
 ];

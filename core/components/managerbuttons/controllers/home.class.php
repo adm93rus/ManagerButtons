@@ -24,7 +24,7 @@ class ManagerbuttonsHomeManagerController extends modExtraManagerController
 
     public function checkPermissions()
     {
-        return true;
+        return $this->service->canManage();
     }
 
     public function getPageTitle()
