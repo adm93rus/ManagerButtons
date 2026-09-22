@@ -16,6 +16,8 @@
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="url" dbtype="varchar" precision="2048" phptype="string" null="false" default="" />
         <field key="icon" dbtype="varchar" precision="128" phptype="string" null="false" default="" />
+        <field key="description" dbtype="varchar" precision="500" phptype="string" null="false" default="" />
+        <field key="background" dbtype="varchar" precision="16" phptype="string" null="false" default="" />
         <field key="cols" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="1" />
         <field key="rank" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
         <index alias="group_id" name="group_id" primary="false" unique="false" type="BTREE">

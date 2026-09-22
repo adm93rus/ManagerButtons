@@ -10,6 +10,7 @@ const props = defineProps({
   visible: Boolean,
   group: { type: Object, default: null },
   icons: { type: Array, default: () => [] },
+  appearance: { type: Object, default: () => ({}) },
 })
 const emit = defineEmits(['update:visible', 'changed'])
 const { _ } = useLexicon()
@@ -155,6 +156,7 @@ onMounted(() => {
         </template>
       </Column>
       <Column field="name" :header="_('managerbuttons_name')" />
+      <Column field="description" :header="_('managerbuttons_description')" />
       <Column field="url" :header="_('managerbuttons_url')" />
       <Column field="cols" :header="_('managerbuttons_cols')" style="width: 6rem" />
       <Column :header="_('managerbuttons_actions')" style="width: 8rem">
@@ -166,8 +168,8 @@ onMounted(() => {
       <template #empty>{{ _('managerbuttons_empty') }}</template>
     </DataTable>
     <Panel :header="_('managerbuttons_button_preview')" style="margin-top: 1rem;">
-      <GroupPreview :groups="previewGroups" />
+      <GroupPreview :groups="previewGroups" :appearance="appearance" />
     </Panel>
-    <ButtonFormDialog v-model:visible="formVisible" :button="current" :icons="icons" @save="saveButton" />
+    <ButtonFormDialog v-model:visible="formVisible" :button="current" :icons="icons" :appearance="appearance" @save="saveButton" />
   </Dialog>
 </template>

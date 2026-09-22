@@ -6,12 +6,13 @@ use ManagerButtons\Model\Button;
 use ManagerButtons\Model\ButtonGroup;
 use ManagerButtons\Model\GroupUserGroup;
 use MODX\Revolution\modManagerController;
+use MODX\Revolution\modSystemSetting;
 use MODX\Revolution\modUserGroup;
 use MODX\Revolution\modX;
 
 class Service
 {
-    public const VERSION = '1.1.1-pl';
+    public const VERSION = '1.2.0-pl';
     public const PACKAGE = 'ManagerButtons';
     public const NAMESPACE = 'managerbuttons';
     public const ADMIN_GROUP = 'Administrator';
@@ -235,6 +236,74 @@ class Service
         return (int) $max;
     }
 
+    public function cleanDescription(string $value): string
+    {
+        $value = trim(strip_tags($value));
+        if (function_exists('mb_substr')) {
+            return mb_substr($value, 0, 500);
+        }
+
+        return substr($value, 0, 500);
+    }
+
+    /**
+     * @return array{background: string, color: string, default_background: string, default_color: string}
+     */
+    public function getAppearance(): array
+    {
+        return [
+            'background' => Color::normalize((string) $this->modx->getOption('managerbuttons.background', null, '')),
+            'color' => Color::normalize((string) $this->modx->getOption('managerbuttons.color', null, '')),
+            'default_background' => Color::DEFAULT_BACKGROUND,
+            'default_color' => Color::DEFAULT_COLOR,
+        ];
+    }
+
+    public function saveAppearance(string $background, string $color): void
+    {
+        $this->writeSetting('managerbuttons.background', Color::normalize($background));
+        $this->writeSetting('managerbuttons.color', Color::normalize($color));
+        if ($this->modx->cacheManager) {
+            $this->modx->cacheManager->refresh(['system_settings' => []]);
+        }
+    }
+
+    public function ensureSettings(): void
+    {
+        $this->ensureSetting('managerbuttons.background');
+        $this->ensureSetting('managerbuttons.color');
+    }
+
+    private function ensureSetting(string $key): void
+    {
+        if ($this->modx->getCount(modSystemSetting::class, ['key' => $key])) {
+            return;
+        }
+        /** @var modSystemSetting $setting */
+        $setting = $this->modx->newObject(modSystemSetting::class);
+        $setting->fromArray([
+            'key' => $key,
+            'value' => '',
+            'xtype' => 'textfield',
+            'namespace' => self::NAMESPACE,
+            'area' => self::NAMESPACE,
+        ], '', true);
+        $setting->save();
+    }
+
+    private function writeSetting(string $key, string $value): void
+    {
+        $this->ensureSetting($key);
+        /** @var modSystemSetting|null $setting */
+        $setting = $this->modx->getObject(modSystemSetting::class, ['key' => $key]);
+        if (!$setting) {
+            return;
+        }
+        $setting->set('value', $value);
+        $setting->save();
+        $this->modx->setOption($key, $value);
+    }
+
     public function normalizeCols(mixed $cols): int
     {
         $cols = (int) $cols;
@@ -285,6 +354,8 @@ class Service
                 'name' => (string) $button->get('name'),
                 'url' => (string) $button->get('url'),
                 'icon' => Icons::normalizeName((string) $button->get('icon')),
+                'description' => (string) $button->get('description'),
+                'background' => Color::normalize((string) $button->get('background')),
                 'cols' => $this->normalizeCols($button->get('cols')),
                 'rank' => (int) $button->get('rank'),
             ];
@@ -355,6 +426,8 @@ class Service
                 'name' => (string) $item['name'],
                 'url' => (string) $item['url'],
                 'icon' => Icons::normalizeName((string) ($item['icon'] ?? '')),
+                'description' => $this->cleanDescription((string) ($item['description'] ?? '')),
+                'background' => Color::normalize((string) ($item['background'] ?? '')),
                 'cols' => $this->normalizeCols($item['cols'] ?? 1),
                 'rank' => isset($item['rank']) ? (int) $item['rank'] : $rank,
             ], '', true);
@@ -421,6 +494,8 @@ class Service
                     'url' => $this->resolveUrl((string) $button->get('url')),
                     'raw_url' => (string) $button->get('url'),
                     'icon' => Icons::cssClass((string) $button->get('icon')),
+                    'description' => (string) $button->get('description'),
+                    'background' => Color::normalize((string) $button->get('background')),
                     'cols' => $this->normalizeCols($button->get('cols')),
                 ];
             }
@@ -492,9 +567,32 @@ JS;
             }
             if (!$exists) {
                 $manager->createObjectContainer($class);
+                continue;
             }
+            $this->addMissingColumns($manager, $class, $table);
         }
+        $this->ensureSettings();
 
         return true;
+    }
+
+    /**
+     * @param object $manager
+     */
+    private function addMissingColumns(object $manager, string $class, string $table): void
+    {
+        $columns = [];
+        $stmt = $this->modx->query('SHOW COLUMNS FROM ' . $table);
+        if ($stmt) {
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $columns[strtolower((string) ($row['Field'] ?? ''))] = true;
+            }
+        }
+        foreach (array_keys($this->modx->getFieldMeta($class) ?: []) as $field) {
+            if ($field === 'id' || isset($columns[strtolower($field)])) {
+                continue;
+            }
+            $manager->addField($class, $field);
+        }
     }
 }

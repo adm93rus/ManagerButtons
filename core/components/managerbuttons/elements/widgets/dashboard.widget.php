@@ -32,6 +32,7 @@ class ManagerButtonsDashboardWidget extends modDashboardWidgetInterface
             'id' => $widgetKey,
             'groups' => $groups,
             'emptyText' => $this->modx->lexicon('managerbuttons_widget_empty'),
+            'appearance' => $service->getAppearance(),
         ];
 
         $js = $service->versionedAsset('js/mgr/vue-dist/widget.min.js');
@@ -66,6 +67,9 @@ class ManagerButtonsDashboardWidget extends modDashboardWidgetInterface
                 $html .= '<a href="' . htmlspecialchars((string) $button['url'], ENT_QUOTES) . '">';
                 $html .= '<i class="' . htmlspecialchars($icon, ENT_QUOTES) . '"></i> ';
                 $html .= htmlspecialchars((string) $button['name'], ENT_QUOTES);
+                if (!empty($button['description'])) {
+                    $html .= ' <small>' . htmlspecialchars((string) $button['description'], ENT_QUOTES) . '</small>';
+                }
                 $html .= '</a> ';
             }
             $html .= '</p>';

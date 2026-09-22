@@ -2,6 +2,7 @@
 
 namespace ManagerButtons\Processors\Button;
 
+use ManagerButtons\Color;
 use ManagerButtons\Model\Button;
 use ManagerButtons\Processors\ProcessorBase;
 
@@ -25,6 +26,8 @@ class GetList extends ProcessorBase
                 'url' => (string) $button->get('url'),
                 'icon' => \ManagerButtons\Icons::normalizeName((string) $button->get('icon')),
                 'icon_class' => \ManagerButtons\Icons::cssClass((string) $button->get('icon')),
+                'description' => (string) $button->get('description'),
+                'background' => Color::normalize((string) $button->get('background')),
                 'cols' => $this->service->normalizeCols($button->get('cols')),
                 'rank' => (int) $button->get('rank'),
             ];
