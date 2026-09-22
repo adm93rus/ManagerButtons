@@ -1,15 +1,16 @@
 # Документация для docs.modx.pro
 
-Файлы готовы к отправке в репозиторий [modx-pro/Docs](https://github.com/modx-pro/Docs).
+Файлы рассчитаны на репозиторий [modx-pro/Docs](https://github.com/modx-pro/Docs).
 
-| Файл в этом каталоге | Куда копировать в Docs |
-|----------------------|------------------------|
+| Здесь | Куда в Docs |
+|---|---|
 | `index.md` | `docs/components/managerbuttons/index.md` |
 | `en.md` | `docs/en/components/managerbuttons/index.md` |
+| `img/` | рядом с каждым `index.md`: `docs/components/managerbuttons/img/` и `docs/en/components/managerbuttons/img/` |
 
-Frontmatter (`title`, `description`, `repository`, `author`, `dependencies`, `compatibility`, `outline`) заполнен по [описанию frontmatter](https://docs.modx.pro/guide/frontmatter).
+Картинки в тексте указаны как `./img/...`, поэтому папку `img` нужно положить в обе языковые директории.
 
-В `docs/authors.json` репозитория Docs добавьте автора, если его ещё нет:
+Если автора ещё нет в `docs/authors.json`:
 
 ```json
 "adm93rus": {
@@ -17,4 +18,4 @@ Frontmatter (`title`, `description`, `repository`, `author`, `dependencies`, `co
 }
 ```
 
-После появления страницы в Docs ссылка будет такой: https://docs.modx.pro/components/managerbuttons
+Страница после публикации: https://docs.modx.pro/components/managerbuttons

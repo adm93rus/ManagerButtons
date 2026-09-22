@@ -10,7 +10,7 @@ defineProps({
 
 function spanStyle(cols) {
   const n = Math.min(4, Math.max(1, Number(cols) || 1))
-  return { gridColumn: `span ${n}` }
+  return { gridColumn: `span ${n}`, display: 'flex', minWidth: 0 }
 }
 </script>
 
@@ -21,7 +21,7 @@ function spanStyle(cols) {
       <div v-for="button in group.buttons" :key="button.id || button.name" :style="spanStyle(button.cols)">
         <Button
           type="button"
-          :style="buttonStyle(button, appearance)"
+          :style="{ ...buttonStyle(button, appearance), flex: '1 1 auto' }"
           @click="clickable && openManagerLink(button.url || button.raw_url)"
         >
           <i :class="button.icon_class || button.icon" />

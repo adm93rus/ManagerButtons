@@ -1,22 +1,21 @@
 ManagerButtons
 ==============
 
-Dashboard button groups for MODX Revolution 3.
+Группы кнопок и ссылок на панели управления MODX 3.
 
-Create sets of buttons and links, restrict them by user group, and show them
-as a dashboard widget. The manager UI uses VueTools (Vue 3 + PrimeVue) and
-follows the active VueTools theme.
+Наборы выводятся виджетом на дашборде. У кнопки есть название, ссылка,
+иконка Font Awesome 5, ширина от 1 до 4 колонок, короткое описание и цвет.
+Набор можно ограничить группами пользователей, экспортировать в JSON
+и перенести на другой сайт.
 
-Requirements
-------------
-- MODX Revolution 3.0.0+
+Требования
+----------
+- MODX Revolution 3.0+
 - PHP 8.1+
-- VueTools 1.2.0+ (theme support)
+- VueTools 1.2.0+
 
-Install VueTools first, then ManagerButtons, from Extras → Installer
-(upload the transport zip). Sign in again if the menu item is missing:
-setup adds the managerbuttons permission to the Administrator policy.
-The widget is placed on the Default dashboard.
+Сначала установите VueTools, затем этот пакет: Приложения → Установщик.
+Если пункта меню нет, выйдите из панели и войдите снова.
 
-Repository: https://github.com/adm93rus/ManagerButtons
-Documentation: https://docs.modx.pro/components/managerbuttons
+Репозиторий: https://github.com/adm93rus/ManagerButtons
+Инструкция: https://docs.modx.pro/components/managerbuttons
