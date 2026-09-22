@@ -12,7 +12,7 @@ use MODX\Revolution\modX;
 
 class Service
 {
-    public const VERSION = '1.2.0-pl';
+    public const VERSION = '1.2.1-pl';
     public const PACKAGE = 'ManagerButtons';
     public const NAMESPACE = 'managerbuttons';
     public const ADMIN_GROUP = 'Administrator';
@@ -43,6 +43,43 @@ class Service
             'version' => self::VERSION,
             'namespace' => self::NAMESPACE,
         ], $config);
+    }
+
+    /**
+     * Lexicon strings for the Vue UI, read from the component files.
+     * The manager topic cache can keep an older copy after an upgrade, so the
+     * page does not depend on MODx.lang for these captions.
+     *
+     * @return array<string, string>
+     */
+    public function lexiconEntries(): array
+    {
+        $language = 'en';
+        if ($this->modx->context && $this->modx->context->get('key') === 'mgr') {
+            $language = (string) $this->modx->getOption(
+                'manager_language',
+                $_SESSION ?? [],
+                $this->modx->getOption('cultureKey', null, 'en')
+            );
+        } else {
+            $language = (string) $this->modx->getOption('cultureKey', null, 'en');
+        }
+        $language = preg_replace('/[^a-zA-Z_-]/', '', $language) ?: 'en';
+
+        $entries = [];
+        foreach (array_unique(['en', $language]) as $lang) {
+            $file = $this->config['corePath'] . 'lexicon/' . $lang . '/default.inc.php';
+            if (!is_file($file)) {
+                continue;
+            }
+            $_lang = [];
+            include $file;
+            if (is_array($_lang)) {
+                $entries = array_merge($entries, $_lang);
+            }
+        }
+
+        return $entries;
     }
 
     public function versionedAsset(string $path): string

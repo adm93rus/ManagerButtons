@@ -58,6 +58,18 @@ if ($policy) {
     }
 }
 
+$cacheRoot = rtrim((string) $modx->getCachePath(), '/\\');
+$topicRoot = $cacheRoot . '/lexicon_topics/lexicon';
+if (is_dir($topicRoot)) {
+    foreach (glob($topicRoot . '/*/managerbuttons', GLOB_ONLYDIR) ?: [] as $dir) {
+        foreach (glob($dir . '/*') ?: [] as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
+}
+
 if ($modx->getCacheManager()) {
     $modx->cacheManager->refresh([
         'access' => [],

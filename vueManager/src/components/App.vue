@@ -253,13 +253,25 @@ onMounted(async () => {
         </template>
       </Column>
       <Column field="buttons_count" :header="_('managerbuttons_buttons_count')" style="width: 8rem" />
-      <Column :header="_('managerbuttons_actions')" style="width: 14rem">
+      <Column :header="_('managerbuttons_actions')" style="width: 16rem">
         <template #body="{ data }">
-          <Button icon="pi pi-th-large" severity="secondary" text rounded :title="_('managerbuttons_buttons')" @click="openButtons(data)" />
-          <Button icon="pi pi-pencil" severity="secondary" text rounded :title="_('managerbuttons_group_update')" @click="openEdit(data)" />
-          <Button icon="pi pi-copy" severity="secondary" text rounded :title="_('managerbuttons_group_duplicate')" @click="duplicate(data)" />
-          <Button icon="pi pi-download" severity="secondary" text rounded :title="_('managerbuttons_group_export')" @click="exportGroup(data)" />
-          <Button icon="pi pi-trash" severity="danger" text rounded :title="_('managerbuttons_group_remove')" @click="askRemove(data)" />
+          <div style="display: flex; gap: 0.25rem; white-space: nowrap;">
+            <Button type="button" outlined severity="secondary" size="small" :aria-label="_('managerbuttons_buttons')" :title="_('managerbuttons_buttons')" style="min-width: 2.25rem; min-height: 2.25rem;" @click="openButtons(data)">
+              <i class="icon icon-th-large" aria-hidden="true" />
+            </Button>
+            <Button type="button" outlined severity="secondary" size="small" :aria-label="_('managerbuttons_group_update')" :title="_('managerbuttons_group_update')" style="min-width: 2.25rem; min-height: 2.25rem;" @click="openEdit(data)">
+              <i class="icon icon-pencil" aria-hidden="true" />
+            </Button>
+            <Button type="button" outlined severity="secondary" size="small" :aria-label="_('managerbuttons_group_duplicate')" :title="_('managerbuttons_group_duplicate')" style="min-width: 2.25rem; min-height: 2.25rem;" @click="duplicate(data)">
+              <i class="icon icon-copy" aria-hidden="true" />
+            </Button>
+            <Button type="button" outlined severity="secondary" size="small" :aria-label="_('managerbuttons_group_export')" :title="_('managerbuttons_group_export')" style="min-width: 2.25rem; min-height: 2.25rem;" @click="exportGroup(data)">
+              <i class="icon icon-download" aria-hidden="true" />
+            </Button>
+            <Button type="button" outlined severity="danger" size="small" :aria-label="_('managerbuttons_group_remove')" :title="_('managerbuttons_group_remove')" style="min-width: 2.25rem; min-height: 2.25rem;" @click="askRemove(data)">
+              <i class="icon icon-trash" aria-hidden="true" />
+            </Button>
+          </div>
         </template>
       </Column>
       <template #empty>{{ _('managerbuttons_empty') }}</template>

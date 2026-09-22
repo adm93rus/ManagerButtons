@@ -38,6 +38,7 @@ class ManagerbuttonsHomeManagerController extends modExtraManagerController
         $config['modAuth'] = $this->modx->user ? $this->modx->user->getUserToken('mgr') : '';
         $config['manager_url'] = $this->modx->getOption('manager_url');
         $config['cultureKey'] = $this->modx->getOption('cultureKey', $_SESSION, 'en');
+        $config['lexicon'] = $this->service->lexiconEntries();
 
         $assetsPath = $this->modx->getOption('assets_path') . 'components/managerbuttons/';
         $vueExists = is_file($assetsPath . 'js/mgr/vue-dist/home.min.js');

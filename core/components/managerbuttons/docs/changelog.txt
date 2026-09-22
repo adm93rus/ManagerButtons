@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1-pl] - 2026-09-22
+
+### Fixed
+- Button list caption for the description column is taken from the component lexicon files, so a stale manager lexicon cache no longer shows the raw key
+- Edit and delete actions on a button row use the manager Font Awesome icons
+
 ## [1.2.0-pl] - 2026-09-22
 
 ### Added

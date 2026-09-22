@@ -33,7 +33,7 @@ lastUpdated: true
 
 1. Приложения → Установщик.
 2. Установите VueTools, если его ещё нет.
-3. Загрузите `ManagerButtons-1.2.0-pl.transport.zip` и установите пакет.
+3. Загрузите `ManagerButtons-1.2.1-pl.transport.zip` и установите пакет.
 4. Выйдите из панели управления и войдите снова, чтобы подтянуть право `managerbuttons`.
 
 В меню **Приложения** появится пункт **ManagerButtons**. Его видят администраторы и пользователи с правом `managerbuttons`. На дашборд Default добавляется виджет **ManagerButtons**.
