@@ -2,6 +2,7 @@
 
 namespace ManagerButtons\Processors\Button;
 
+use ManagerButtons\Color;
 use ManagerButtons\Icons;
 use ManagerButtons\Model\Button;
 use ManagerButtons\Processors\ProcessorBase;
@@ -25,6 +26,8 @@ class Update extends ProcessorBase
             'name' => $name,
             'url' => $url,
             'icon' => Icons::normalizeName((string) $this->getProperty('icon', $button->get('icon'))),
+            'description' => $this->service->cleanDescription((string) $this->getProperty('description', $button->get('description'))),
+            'background' => Color::normalize((string) $this->getProperty('background', $button->get('background'))),
             'cols' => $this->service->normalizeCols($this->getProperty('cols', $button->get('cols'))),
         ]);
         if (!$button->save()) {

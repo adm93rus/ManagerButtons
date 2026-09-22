@@ -31,7 +31,7 @@ Install **VueTools** before ManagerButtons. The transport package declares the d
 
 1. Extras → Installer.
 2. Install VueTools if it is not installed yet.
-3. Upload `ManagerButtons-1.1.1-pl.transport.zip` and install it.
+3. Upload `ManagerButtons-1.2.0-pl.transport.zip` and install it.
 4. Sign out of the manager and sign in again so the `managerbuttons` permission is loaded.
 
 The **ManagerButtons** item appears under Extras for administrators and for users who have the `managerbuttons` permission. The **ManagerButtons** widget is placed on the Default dashboard.
@@ -67,8 +67,14 @@ Each button has:
 - **Link** — a manager action (`?a=resource/create`), a path, or an external URL
 - **Icon** — the full Font Awesome 5 set shipped with the MODX 3 manager. The short name (`home`) is stored, and the dashboard renders `icon icon-home`
 - **Columns** — width from 1 to 4 in the group grid
+- **Description** — short text under the name
+- **Button background** — its own color. Empty uses the general setting
 
 The group editor includes a live grid preview.
+
+## General settings
+
+**General settings** sets the background and text color for every button. With no background, buttons are blue (`#234368`) and the text is white (`#ffffff`). A button background overrides the general one. The same values are stored in the system settings `managerbuttons.background` and `managerbuttons.color`.
 
 Links like `?a=...` open through `MODx.loadPage` without a full manager reload. External `http` and `https` addresses open in a new tab.
 
@@ -78,7 +84,7 @@ The **ManagerButtons** widget lists every group the current user can access. Eac
 
 To show a single group, set `group_id` in the widget properties to that group's numeric id. An empty value lists every set the user can access.
 
-Button styling follows the VueTools theme (`aura` or `modx`).
+A button is a grid: the icon and name, with the description under the name. Colors come from general settings and from the button itself.
 
 ## Export and import
 
@@ -103,6 +109,8 @@ Example file:
         "name": "Create resource",
         "url": "?a=resource/create",
         "icon": "plus",
+        "description": "New page",
+        "background": "",
         "cols": 2,
         "rank": 0
       }

@@ -17,6 +17,6 @@ onMounted(() => {
 <template>
   <div class="managerbuttons-widget-root">
     <p v-if="!groups.length">{{ payload.emptyText || _('managerbuttons_widget_empty') }}</p>
-    <GroupPreview v-else :groups="groups" clickable />
+    <GroupPreview v-else :groups="groups" :appearance="payload.appearance || {}" clickable />
   </div>
 </template>

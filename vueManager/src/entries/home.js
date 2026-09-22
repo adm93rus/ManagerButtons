@@ -1,5 +1,6 @@
 import {
   Button,
+  ColorPicker,
   Column,
   ConfirmDialog,
   DataTable,
@@ -11,7 +12,6 @@ import {
   InputText,
   MultiSelect,
   Panel,
-  SelectButton,
   Tag,
   Textarea,
   Toast,
@@ -22,6 +22,7 @@ import App from '../components/App.vue'
 
 const components = {
   Button,
+  ColorPicker,
   Column,
   ConfirmDialog,
   DataTable,
@@ -33,7 +34,6 @@ const components = {
   InputText,
   MultiSelect,
   Panel,
-  SelectButton,
   Tag,
   Textarea,
   Toast,

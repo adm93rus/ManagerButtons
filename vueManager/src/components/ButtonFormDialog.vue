@@ -2,15 +2,17 @@
 import { reactive, ref, watch } from 'vue'
 import { useLexicon } from '../composables/useLexicon.js'
 import IconPicker from './IconPicker.vue'
+import { DEFAULT_BACKGROUND, normalizeColor } from '../composables/colors.js'
 
 const props = defineProps({
   visible: Boolean,
   button: { type: Object, default: null },
   icons: { type: Array, default: () => [] },
+  appearance: { type: Object, default: () => ({}) },
 })
 const emit = defineEmits(['update:visible', 'save'])
 const { _ } = useLexicon()
-const form = reactive({ name: '', url: '', icon: 'link', cols: 1 })
+const form = reactive({ name: '', url: '', icon: 'link', cols: 1, description: '', background: '' })
 const iconQuery = ref('')
 const dialogVisible = ref(false)
 
@@ -23,6 +25,8 @@ watch(
     form.url = props.button?.url || ''
     form.icon = props.button?.icon || 'link'
     form.cols = Number(props.button?.cols) || 1
+    form.description = props.button?.description || ''
+    form.background = normalizeColor(props.button?.background)
     iconQuery.value = ''
   }
 )
@@ -34,7 +38,34 @@ function save() {
     url: form.url.trim(),
     icon: form.icon,
     cols: Number(form.cols) || 1,
+    description: form.description.trim(),
+    background: normalizeColor(form.background),
   })
+}
+
+function inheritedBackground() {
+  return normalizeColor(props.appearance?.background) || props.appearance?.default_background || DEFAULT_BACKGROUND
+}
+
+function columnStyle(n) {
+  const active = n <= Number(form.cols)
+  return {
+    flex: '1 1 0',
+    minHeight: '2.75rem',
+    margin: '0',
+    padding: '0',
+    border: '0',
+    borderRight: n < 4 ? '1px solid var(--p-content-border-color, #d0d7e2)' : '0',
+    background: active ? DEFAULT_BACKGROUND : '#f4f7fb',
+    color: active ? '#ffffff' : 'var(--p-text-muted-color, #64748b)',
+    fontWeight: '700',
+    cursor: 'pointer',
+  }
+}
+
+function onButtonBackground(value) {
+  const next = normalizeColor(value)
+  form.background = next === inheritedBackground() ? '' : next
 }
 </script>
 
@@ -57,9 +88,40 @@ function save() {
         </div>
       </div>
       <Fieldset :legend="_('managerbuttons_cols')">
-        <div style="display: flex; flex-direction: column; gap: 0.375rem; align-items: flex-start;">
-          <SelectButton v-model="form.cols" :options="[1, 2, 3, 4]" :allowEmpty="false" />
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div
+            role="group"
+            :aria-label="_('managerbuttons_cols')"
+            style="display: flex; width: 100%; border: 1px solid var(--p-content-border-color, #d0d7e2); border-radius: 6px; overflow: hidden;"
+          >
+            <button
+              v-for="n in 4"
+              :key="n"
+              type="button"
+              :aria-pressed="n <= form.cols"
+              :style="columnStyle(n)"
+              @click="form.cols = n"
+            >{{ n }}</button>
+          </div>
           <small style="color: var(--p-text-muted-color);">{{ _('managerbuttons_cols_help') }}</small>
+        </div>
+      </Fieldset>
+      <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+        <label style="font-weight: 700;">{{ _('managerbuttons_description') }}</label>
+        <Textarea v-model="form.description" rows="3" autoResize fluid />
+        <small style="color: var(--p-text-muted-color);">{{ _('managerbuttons_description_help') }}</small>
+      </div>
+      <Fieldset :legend="_('managerbuttons_button_background')">
+        <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <ColorPicker
+              :modelValue="(normalizeColor(form.background) || inheritedBackground()).slice(1)"
+              @update:modelValue="onButtonBackground"
+            />
+            <InputText v-model="form.background" fluid :placeholder="inheritedBackground()" />
+            <Button type="button" :label="_('managerbuttons_color_clear')" severity="secondary" text @click="form.background = ''" />
+          </div>
+          <small style="color: var(--p-text-muted-color);">{{ _('managerbuttons_button_background_help') }}</small>
         </div>
       </Fieldset>
       <Fieldset :legend="_('managerbuttons_icon')">
