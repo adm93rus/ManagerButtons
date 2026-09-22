@@ -2,7 +2,7 @@
 import { reactive, ref, watch } from 'vue'
 import { useLexicon } from '../composables/useLexicon.js'
 import IconPicker from './IconPicker.vue'
-import { normalizeColor } from '../composables/colors.js'
+import { DEFAULT_BACKGROUND, normalizeColor } from '../composables/colors.js'
 
 const props = defineProps({
   visible: Boolean,
@@ -44,7 +44,23 @@ function save() {
 }
 
 function inheritedBackground() {
-  return normalizeColor(props.appearance?.background) || props.appearance?.default_background || '#e5e5e5'
+  return normalizeColor(props.appearance?.background) || props.appearance?.default_background || DEFAULT_BACKGROUND
+}
+
+function columnStyle(n) {
+  const active = n <= Number(form.cols)
+  return {
+    flex: '1 1 0',
+    minHeight: '2.75rem',
+    margin: '0',
+    padding: '0',
+    border: '0',
+    borderRight: n < 4 ? '1px solid var(--p-content-border-color, #d0d7e2)' : '0',
+    background: active ? DEFAULT_BACKGROUND : '#f4f7fb',
+    color: active ? '#ffffff' : 'var(--p-text-muted-color, #64748b)',
+    fontWeight: '700',
+    cursor: 'pointer',
+  }
 }
 
 function onButtonBackground(value) {
@@ -72,8 +88,21 @@ function onButtonBackground(value) {
         </div>
       </div>
       <Fieldset :legend="_('managerbuttons_cols')">
-        <div style="display: flex; flex-direction: column; gap: 0.375rem; align-items: flex-start;">
-          <SelectButton v-model="form.cols" :options="[1, 2, 3, 4]" :allowEmpty="false" />
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div
+            role="group"
+            :aria-label="_('managerbuttons_cols')"
+            style="display: flex; width: 100%; border: 1px solid var(--p-content-border-color, #d0d7e2); border-radius: 6px; overflow: hidden;"
+          >
+            <button
+              v-for="n in 4"
+              :key="n"
+              type="button"
+              :aria-pressed="n <= form.cols"
+              :style="columnStyle(n)"
+              @click="form.cols = n"
+            >{{ n }}</button>
+          </div>
           <small style="color: var(--p-text-muted-color);">{{ _('managerbuttons_cols_help') }}</small>
         </div>
       </Fieldset>

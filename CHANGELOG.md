@@ -5,7 +5,7 @@
 ### Added
 - Button description under the title
 - Per-button background color
-- General settings for the default background and text color. With no background, buttons are gray
+- General settings for the default background and text color. With no background, buttons are blue with white text
 
 ## [1.1.1-pl] - 2026-09-22
 

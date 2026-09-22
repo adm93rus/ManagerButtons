@@ -1,5 +1,5 @@
-export const DEFAULT_BACKGROUND = '#e5e5e5'
-export const DEFAULT_COLOR = '#333333'
+export const DEFAULT_BACKGROUND = '#1d4ed8'
+export const DEFAULT_COLOR = '#ffffff'
 
 export function normalizeColor(value) {
   const raw = String(value || '').trim()
