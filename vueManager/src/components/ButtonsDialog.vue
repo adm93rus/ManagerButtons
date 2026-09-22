@@ -138,6 +138,7 @@ onMounted(() => {
         <Button :label="_('managerbuttons_button_create')" icon="pi pi-plus" severity="success" @click="openCreate" />
       </template>
     </Toolbar>
+    <div style="overflow-x: auto;">
     <DataTable
       :value="buttons"
       dataKey="id"
@@ -157,16 +158,45 @@ onMounted(() => {
       </Column>
       <Column field="name" :header="_('managerbuttons_name')" />
       <Column field="description" :header="_('managerbuttons_description')" />
-      <Column field="url" :header="_('managerbuttons_url')" />
-      <Column field="cols" :header="_('managerbuttons_cols')" style="width: 6rem" />
-      <Column :header="_('managerbuttons_actions')" style="width: 8rem">
+      <Column field="url" :header="_('managerbuttons_url')" style="max-width: 16rem">
         <template #body="{ data }">
-          <Button icon="pi pi-pencil" severity="secondary" text rounded :title="_('managerbuttons_button_update')" @click="openEdit(data)" />
-          <Button icon="pi pi-trash" severity="danger" text rounded :title="_('managerbuttons_button_remove')" @click="askRemove(data)" />
+          <span :title="data.url" style="display: inline-block; max-width: 16rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ data.url }}</span>
+        </template>
+      </Column>
+      <Column field="cols" :header="_('managerbuttons_cols')" style="width: 6rem" />
+      <Column :header="_('managerbuttons_actions')" style="width: 7.5rem">
+        <template #body="{ data }">
+          <div style="display: flex; gap: 0.25rem; white-space: nowrap;">
+            <Button
+              type="button"
+              outlined
+              severity="secondary"
+              size="small"
+              :aria-label="_('managerbuttons_button_update')"
+              :title="_('managerbuttons_button_update')"
+              style="min-width: 2.25rem; min-height: 2.25rem;"
+              @click="openEdit(data)"
+            >
+              <i class="icon icon-pencil" aria-hidden="true" />
+            </Button>
+            <Button
+              type="button"
+              outlined
+              severity="danger"
+              size="small"
+              :aria-label="_('managerbuttons_button_remove')"
+              :title="_('managerbuttons_button_remove')"
+              style="min-width: 2.25rem; min-height: 2.25rem;"
+              @click="askRemove(data)"
+            >
+              <i class="icon icon-trash" aria-hidden="true" />
+            </Button>
+          </div>
         </template>
       </Column>
       <template #empty>{{ _('managerbuttons_empty') }}</template>
     </DataTable>
+    </div>
     <Panel :header="_('managerbuttons_button_preview')" style="margin-top: 1rem;">
       <GroupPreview :groups="previewGroups" :appearance="appearance" />
     </Panel>

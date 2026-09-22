@@ -31,7 +31,7 @@ Install **VueTools** before ManagerButtons. The transport package declares the d
 
 1. Extras → Installer.
 2. Install VueTools if it is not installed yet.
-3. Upload `ManagerButtons-1.2.0-pl.transport.zip` and install it.
+3. Upload `ManagerButtons-1.2.1-pl.transport.zip` and install it.
 4. Sign out of the manager and sign in again so the `managerbuttons` permission is loaded.
 
 The **ManagerButtons** item appears under Extras for administrators and for users who have the `managerbuttons` permission. The **ManagerButtons** widget is placed on the Default dashboard.

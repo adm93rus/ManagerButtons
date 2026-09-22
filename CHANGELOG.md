@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1-pl] - 2026-09-22
+
+### Fixed
+- The buttons dialog showed the raw key `managerbuttons_description` when the manager lexicon cache was still the previous topic. Captions are now read from the component lexicon files
+- Edit and delete actions on a button row use the manager Font Awesome icons, so they stay visible when PrimeIcons do not paint inside the table
+
 ## [1.2.0-pl] - 2026-09-22
 
 ### Added
