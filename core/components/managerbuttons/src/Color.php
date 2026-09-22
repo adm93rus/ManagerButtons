@@ -4,7 +4,7 @@ namespace ManagerButtons;
 
 class Color
 {
-    public const DEFAULT_BACKGROUND = '#1d4ed8';
+    public const DEFAULT_BACKGROUND = '#234368';
     public const DEFAULT_COLOR = '#ffffff';
 
     /**

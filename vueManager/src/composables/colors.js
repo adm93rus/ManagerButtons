@@ -1,4 +1,4 @@
-export const DEFAULT_BACKGROUND = '#1d4ed8'
+export const DEFAULT_BACKGROUND = '#234368'
 export const DEFAULT_COLOR = '#ffffff'
 
 export function normalizeColor(value) {

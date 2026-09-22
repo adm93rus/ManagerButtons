@@ -74,7 +74,7 @@ The group editor includes a live grid preview.
 
 ## General settings
 
-**General settings** sets the background and text color for every button. With no background, buttons are blue (`#1d4ed8`) and the text is white (`#ffffff`). A button background overrides the general one. The same values are stored in the system settings `managerbuttons.background` and `managerbuttons.color`.
+**General settings** sets the background and text color for every button. With no background, buttons are blue (`#234368`) and the text is white (`#ffffff`). A button background overrides the general one. The same values are stored in the system settings `managerbuttons.background` and `managerbuttons.color`.
 
 Links like `?a=...` open through `MODx.loadPage` without a full manager reload. External `http` and `https` addresses open in a new tab.
 
