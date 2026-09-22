@@ -45,7 +45,7 @@ const visible = computed(() => matches.value.slice(0, LIMIT))
       <InputText v-model="query" fluid :placeholder="_('managerbuttons_icon_search')" />
     </IconField>
     <InputText v-model="selected" fluid :placeholder="_('managerbuttons_icon_custom')" />
-    <small>{{ _('managerbuttons_icon_limit') }}</small>
+    <small style="color: var(--p-text-muted-color);">{{ _('managerbuttons_icon_limit') }}</small>
     <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.35rem; max-height: 16rem; overflow: auto;">
       <Button
         v-for="icon in visible"

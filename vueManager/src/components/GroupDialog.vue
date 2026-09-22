@@ -33,27 +33,28 @@ function save() {
     v-model:visible="dialogVisible"
     modal
     :header="group?.id ? _('managerbuttons_group_update') : _('managerbuttons_group_create')"
-    :style="{ width: '40rem' }"
+    :style="{ width: '48rem' }"
   >
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-      <div>
-        <label>{{ _('managerbuttons_name') }} *</label>
+    <div style="display: flex; flex-direction: column; gap: 1.25rem; padding-top: 1rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+        <label style="font-weight: 700;">{{ _('managerbuttons_name') }} *</label>
         <InputText v-model="form.name" fluid autofocus />
       </div>
-      <div>
-        <label>{{ _('managerbuttons_usergroups') }}</label>
-        <MultiSelect
-          v-model="form.usergroup_ids"
-          :options="userGroups"
-          optionLabel="name"
-          optionValue="id"
-          display="chip"
-          filter
-          fluid
-          :placeholder="_('managerbuttons_usergroups_empty')"
-        />
-        <small>{{ _('managerbuttons_usergroups_help') }}</small>
-      </div>
+      <Fieldset :legend="_('managerbuttons_usergroups')">
+        <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+          <MultiSelect
+            v-model="form.usergroup_ids"
+            :options="userGroups"
+            optionLabel="name"
+            optionValue="id"
+            display="chip"
+            filter
+            fluid
+            :placeholder="_('managerbuttons_usergroups_empty')"
+          />
+          <small style="color: var(--p-text-muted-color);">{{ _('managerbuttons_usergroups_help') }}</small>
+        </div>
+      </Fieldset>
     </div>
     <template #footer>
       <Button :label="_('managerbuttons_cancel')" severity="secondary" text @click="dialogVisible = false" />

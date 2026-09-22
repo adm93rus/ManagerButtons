@@ -11,7 +11,7 @@ use MODX\Revolution\modX;
 
 class Service
 {
-    public const VERSION = '1.1.0-pl';
+    public const VERSION = '1.1.1-pl';
     public const PACKAGE = 'ManagerButtons';
     public const NAMESPACE = 'managerbuttons';
     public const ADMIN_GROUP = 'Administrator';
@@ -204,23 +204,35 @@ class Service
         }
     }
 
+    /**
+     * RANK is reserved in MySQL 8. xPDO writes sortby columns verbatim, so
+     * ORDER BY rank is a syntax error and the saved row never reaches the list.
+     */
+    public function applyRankOrder(object $query): void
+    {
+        $query->sortby($this->modx->escape('rank'), 'ASC');
+        $query->sortby('id', 'ASC');
+    }
+
     public function nextGroupRank(): int
     {
-        $c = $this->modx->newQuery(ButtonGroup::class);
-        $c->select('MAX(rank)');
-        $max = $this->modx->getValue($c->prepare());
-
-        return ((int) $max) + 1;
+        return $this->maxRank($this->modx->newQuery(ButtonGroup::class)) + 1;
     }
 
     public function nextButtonRank(int $groupId): int
     {
-        $c = $this->modx->newQuery(Button::class);
-        $c->where(['group_id' => $groupId]);
-        $c->select('MAX(rank)');
-        $max = $this->modx->getValue($c->prepare());
+        $query = $this->modx->newQuery(Button::class);
+        $query->where(['group_id' => $groupId]);
 
-        return ((int) $max) + 1;
+        return $this->maxRank($query) + 1;
+    }
+
+    private function maxRank(object $query): int
+    {
+        $query->select('MAX(' . $this->modx->escape('rank') . ')');
+        $max = $this->modx->getValue($query->prepare());
+
+        return (int) $max;
     }
 
     public function normalizeCols(mixed $cols): int
@@ -267,8 +279,7 @@ class Service
         $buttons = [];
         $c = $this->modx->newQuery(Button::class);
         $c->where(['group_id' => $group->get('id')]);
-        $c->sortby('rank', 'ASC');
-        $c->sortby('id', 'ASC');
+        $this->applyRankOrder($c);
         foreach ($this->modx->getIterator(Button::class, $c) as $button) {
             $buttons[] = [
                 'name' => (string) $button->get('name'),
@@ -391,8 +402,7 @@ class Service
         if ($onlyGroupId) {
             $c->where(['id' => $onlyGroupId]);
         }
-        $c->sortby('rank', 'ASC');
-        $c->sortby('id', 'ASC');
+        $this->applyRankOrder($c);
 
         $out = [];
         foreach ($this->modx->getIterator(ButtonGroup::class, $c) as $group) {
@@ -403,8 +413,7 @@ class Service
             $buttons = [];
             $bc = $this->modx->newQuery(Button::class);
             $bc->where(['group_id' => $id]);
-            $bc->sortby('rank', 'ASC');
-            $bc->sortby('id', 'ASC');
+            $this->applyRankOrder($bc);
             foreach ($this->modx->getIterator(Button::class, $bc) as $button) {
                 $buttons[] = [
                     'id' => (int) $button->get('id'),

@@ -19,8 +19,7 @@ class GetList extends ProcessorBase
             $c->where(['name:LIKE' => '%' . $query . '%']);
         }
         $total = $this->modx->getCount(ButtonGroup::class, clone $c);
-        $c->sortby('rank', 'ASC');
-        $c->sortby('id', 'ASC');
+        $this->service->applyRankOrder($c);
         if ($limit > 0) {
             $c->limit($limit, $start);
         }
