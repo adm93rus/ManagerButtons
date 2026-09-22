@@ -10,6 +10,8 @@ use xPDO\Om\xPDOSimpleObject;
  * @property string $name
  * @property string $url
  * @property string $icon
+ * @property string $description
+ * @property string $background
  * @property int $cols
  * @property int $rank
  *

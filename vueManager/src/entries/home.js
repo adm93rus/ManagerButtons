@@ -1,5 +1,6 @@
 import {
   Button,
+  ColorPicker,
   Column,
   ConfirmDialog,
   DataTable,
@@ -22,6 +23,7 @@ import App from '../components/App.vue'
 
 const components = {
   Button,
+  ColorPicker,
   Column,
   ConfirmDialog,
   DataTable,

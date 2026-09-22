@@ -7,6 +7,7 @@ import { downloadJson } from '../composables/links.js'
 import GroupDialog from './GroupDialog.vue'
 import ButtonsDialog from './ButtonsDialog.vue'
 import ImportDialog from './ImportDialog.vue'
+import SettingsDialog from './SettingsDialog.vue'
 
 const { _ } = useLexicon()
 const { post } = useConnector()
@@ -22,6 +23,8 @@ const selected = ref([])
 const groupDialog = ref(false)
 const buttonsDialog = ref(false)
 const importDialog = ref(false)
+const settingsDialog = ref(false)
+const appearance = ref({})
 const current = ref(null)
 let searchTimer = 0
 
@@ -56,6 +59,26 @@ async function loadGroups() {
     notifyError(error)
   } finally {
     loading.value = false
+  }
+}
+
+async function loadAppearance() {
+  try {
+    const res = await post('ManagerButtons\\Processors\\Settings\\Get')
+    appearance.value = res.object || {}
+  } catch (error) {
+    notifyError(error)
+  }
+}
+
+async function saveAppearance(form) {
+  try {
+    const res = await post('ManagerButtons\\Processors\\Settings\\Update', form)
+    appearance.value = res.object || appearance.value
+    settingsDialog.value = false
+    notifyOk(res.message)
+  } catch (error) {
+    notifyError(error)
   }
 }
 
@@ -173,7 +196,7 @@ async function onReorder(event) {
 }
 
 onMounted(async () => {
-  await Promise.all([loadLookups(), loadGroups()])
+  await Promise.all([loadLookups(), loadGroups(), loadAppearance()])
 })
 </script>
 
@@ -186,6 +209,7 @@ onMounted(async () => {
         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
           <Button :label="_('managerbuttons_group_create')" icon="pi pi-plus" severity="success" @click="openCreate" />
           <Button :label="_('managerbuttons_group_import')" icon="pi pi-upload" severity="secondary" outlined @click="importDialog = true" />
+          <Button :label="_('managerbuttons_settings')" icon="pi pi-cog" severity="secondary" outlined @click="settingsDialog = true" />
           <Button
             :label="_('managerbuttons_group_remove')"
             icon="pi pi-trash"
@@ -241,7 +265,8 @@ onMounted(async () => {
       <template #empty>{{ _('managerbuttons_empty') }}</template>
     </DataTable>
     <GroupDialog v-model:visible="groupDialog" :group="current" :user-groups="userGroups" @save="saveGroup" />
-    <ButtonsDialog v-model:visible="buttonsDialog" :group="current" :icons="icons" @changed="loadGroups" />
+    <ButtonsDialog v-model:visible="buttonsDialog" :group="current" :icons="icons" :appearance="appearance" @changed="loadGroups" />
     <ImportDialog v-model:visible="importDialog" @import="importGroup" />
+    <SettingsDialog v-model:visible="settingsDialog" :appearance="appearance" @save="saveAppearance" />
   </div>
 </template>

@@ -1,9 +1,11 @@
 <script setup>
 import { openManagerLink } from '../composables/links.js'
+import { buttonStyle } from '../composables/colors.js'
 
 defineProps({
   groups: { type: Array, default: () => [] },
   clickable: { type: Boolean, default: false },
+  appearance: { type: Object, default: () => ({}) },
 })
 
 function spanStyle(cols) {
@@ -19,11 +21,12 @@ function spanStyle(cols) {
       <div v-for="button in group.buttons" :key="button.id || button.name" :style="spanStyle(button.cols)">
         <Button
           type="button"
-          style="width: 100%; justify-content: flex-start; gap: 0.6rem; white-space: normal; text-align: left;"
+          :style="buttonStyle(button, appearance)"
           @click="clickable && openManagerLink(button.url || button.raw_url)"
         >
           <i :class="button.icon_class || button.icon" />
           <span>{{ button.name }}</span>
+          <span v-if="button.description" style="opacity: .7; font-size: .8em; grid-column: 2;">{{ button.description }}</span>
         </Button>
       </div>
     </div>
