@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0-pl] - 2026-09-22
+
+### Added
+- Full Font Awesome 5 icon set from the MODX 3 manager
+- `managerbuttons` permission on the Administrator policy (settings page)
+- Bulk delete, search, and pagination in the VueTools manager page
+- Widget property `group_id`
+
+### Changed
+- External links in the dashboard widget open in a new tab
+- Manager actions (`?a=...`) still open through `MODx.loadPage`
+
 ## [1.0.0-pl] - 2026-09-21
 
 ### Added

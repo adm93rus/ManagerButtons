@@ -11,7 +11,7 @@ use MODX\Revolution\modX;
 
 class Service
 {
-    public const VERSION = '1.0.0-pl';
+    public const VERSION = '1.1.0-pl';
     public const PACKAGE = 'ManagerButtons';
     public const NAMESPACE = 'managerbuttons';
     public const ADMIN_GROUP = 'Administrator';
@@ -66,6 +66,23 @@ class Service
         }
 
         return $user->isMember(self::ADMIN_GROUP);
+    }
+
+    /**
+     * Settings page and connectors. Administrators always pass.
+     * Other manager users pass when the managerbuttons permission is granted.
+     */
+    public function canManage(): bool
+    {
+        $user = $this->modx->user;
+        if (!$user || !$user->hasSessionContext('mgr')) {
+            return false;
+        }
+        if ($this->isAdministrator()) {
+            return true;
+        }
+
+        return (bool) $this->modx->hasPermission('managerbuttons');
     }
 
     /**
@@ -256,7 +273,7 @@ class Service
             $buttons[] = [
                 'name' => (string) $button->get('name'),
                 'url' => (string) $button->get('url'),
-                'icon' => (string) $button->get('icon'),
+                'icon' => Icons::normalizeName((string) $button->get('icon')),
                 'cols' => $this->normalizeCols($button->get('cols')),
                 'rank' => (int) $button->get('rank'),
             ];
@@ -326,7 +343,7 @@ class Service
                 'group_id' => (int) $group->get('id'),
                 'name' => (string) $item['name'],
                 'url' => (string) $item['url'],
-                'icon' => (string) ($item['icon'] ?? ''),
+                'icon' => Icons::normalizeName((string) ($item['icon'] ?? '')),
                 'cols' => $this->normalizeCols($item['cols'] ?? 1),
                 'rank' => isset($item['rank']) ? (int) $item['rank'] : $rank,
             ], '', true);

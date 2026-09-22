@@ -21,8 +21,7 @@ watch(dialogVisible, (v) => emit('update:visible', v))
 
 const canImport = computed(() => payload.value.trim().length > 2)
 
-function onFile(event) {
-  const file = event.target.files?.[0]
+function readFile(file) {
   if (!file) return
   const reader = new FileReader()
   reader.onload = () => {
@@ -31,21 +30,32 @@ function onFile(event) {
   reader.readAsText(file)
 }
 
+function onUpload(event) {
+  readFile(event.files?.[0])
+}
+
 function submit() {
   emit('import', payload.value)
 }
 </script>
 
 <template>
-  <Dialog v-model:visible="dialogVisible" modal :header="_('managerbuttons_import_title')" :style="{ width: '36rem' }">
-    <p>{{ _('managerbuttons_import_help') }}</p>
-    <div class="p-fluid" style="display: grid; gap: 0.75rem;">
-      <input type="file" accept="application/json,.json" @change="onFile" />
-      <Textarea v-model="payload" rows="12" autoResize />
+  <Dialog v-model:visible="dialogVisible" modal :header="_('managerbuttons_import_title')" :style="{ width: '40rem' }">
+    <div style="display: grid; gap: 0.75rem;">
+      <p style="margin: 0;">{{ _('managerbuttons_import_help') }}</p>
+      <FileUpload
+        mode="basic"
+        accept="application/json,.json"
+        customUpload
+        auto
+        :chooseLabel="_('managerbuttons_import_file')"
+        @uploader="onUpload"
+      />
+      <Textarea v-model="payload" rows="12" autoResize fluid />
     </div>
     <template #footer>
-      <Button :label="_('managerbuttons_cancel')" severity="secondary" @click="dialogVisible = false" />
-      <Button :label="_('managerbuttons_group_import')" severity="success" :disabled="!canImport" @click="submit" />
+      <Button :label="_('managerbuttons_cancel')" severity="secondary" text @click="dialogVisible = false" />
+      <Button :label="_('managerbuttons_group_import')" icon="pi pi-upload" severity="success" :disabled="!canImport" @click="submit" />
     </template>
   </Dialog>
 </template>

@@ -1,17 +1,23 @@
 export function openManagerLink(url) {
   if (!url) return
+  let parsed = null
   try {
-    const parsed = new URL(url, window.location.origin)
-    const action = parsed.searchParams.get('a')
-    const sameOrigin = parsed.origin === window.location.origin
-    if (action && sameOrigin && window.MODx && typeof window.MODx.loadPage === 'function') {
-      const params = new URLSearchParams(parsed.search)
-      params.delete('a')
-      window.MODx.loadPage(action, params.toString())
-      return
-    }
+    parsed = new URL(url, window.location.origin)
   } catch (e) {
-    /* ignore parse errors */
+    window.location.href = url
+    return
+  }
+  const action = parsed.searchParams.get('a')
+  const sameOrigin = parsed.origin === window.location.origin
+  if (action && sameOrigin && window.MODx && typeof window.MODx.loadPage === 'function') {
+    const params = new URLSearchParams(parsed.search)
+    params.delete('a')
+    window.MODx.loadPage(action, params.toString())
+    return
+  }
+  if (/^https?:$/i.test(parsed.protocol)) {
+    window.open(parsed.href, '_blank', 'noopener,noreferrer')
+    return
   }
   window.location.href = url
 }

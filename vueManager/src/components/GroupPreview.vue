@@ -19,8 +19,7 @@ function spanStyle(cols) {
       <div v-for="button in group.buttons" :key="button.id || button.name" :style="spanStyle(button.cols)">
         <Button
           type="button"
-          class="w-full"
-          style="width: 100%; justify-content: flex-start; gap: 0.6rem;"
+          style="width: 100%; justify-content: flex-start; gap: 0.6rem; white-space: normal; text-align: left;"
           @click="clickable && openManagerLink(button.url || button.raw_url)"
         >
           <i :class="button.icon_class || button.icon" />

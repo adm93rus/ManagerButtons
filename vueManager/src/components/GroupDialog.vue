@@ -10,27 +10,21 @@ const props = defineProps({
 const emit = defineEmits(['update:visible', 'save'])
 const { _ } = useLexicon()
 const form = reactive({ name: '', usergroup_ids: [] })
+const dialogVisible = ref(false)
 
 watch(
   () => props.visible,
   (open) => {
+    dialogVisible.value = open
     if (!open) return
     form.name = props.group?.name || ''
     form.usergroup_ids = [...(props.group?.usergroup_ids || [])]
   }
 )
-
-const dialogVisible = ref(false)
-watch(
-  () => props.visible,
-  (v) => {
-    dialogVisible.value = v
-  }
-)
 watch(dialogVisible, (v) => emit('update:visible', v))
 
 function save() {
-  emit('save', { ...form })
+  emit('save', { name: form.name.trim(), usergroup_ids: [...form.usergroup_ids] })
 }
 </script>
 
@@ -39,15 +33,15 @@ function save() {
     v-model:visible="dialogVisible"
     modal
     :header="group?.id ? _('managerbuttons_group_update') : _('managerbuttons_group_create')"
-    :style="{ width: '32rem' }"
+    :style="{ width: '40rem' }"
   >
-    <div class="p-fluid" style="display: grid; gap: 1rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
       <div>
-        <label class="font-bold">{{ _('managerbuttons_name') }}</label>
-        <InputText v-model="form.name" autofocus />
+        <label>{{ _('managerbuttons_name') }} *</label>
+        <InputText v-model="form.name" fluid autofocus />
       </div>
       <div>
-        <label class="font-bold">{{ _('managerbuttons_usergroups') }}</label>
+        <label>{{ _('managerbuttons_usergroups') }}</label>
         <MultiSelect
           v-model="form.usergroup_ids"
           :options="userGroups"
@@ -55,14 +49,14 @@ function save() {
           optionValue="id"
           display="chip"
           filter
+          fluid
           :placeholder="_('managerbuttons_usergroups_empty')"
-          style="width: 100%;"
         />
         <small>{{ _('managerbuttons_usergroups_help') }}</small>
       </div>
     </div>
     <template #footer>
-      <Button :label="_('managerbuttons_cancel')" severity="secondary" @click="dialogVisible = false" />
+      <Button :label="_('managerbuttons_cancel')" severity="secondary" text @click="dialogVisible = false" />
       <Button :label="_('managerbuttons_save')" severity="success" :disabled="!form.name.trim()" @click="save" />
     </template>
   </Dialog>

@@ -146,7 +146,7 @@ $manifestVehicles[] = [
 ];
 
 $resolvers = [];
-foreach (['resolve.tables', 'resolve.widget'] as $name) {
+foreach (['resolve.tables', 'resolve.widget', 'resolve.permissions'] as $name) {
     $src = $root . '_build/resolvers/' . $name . '.php';
     if (!is_file($src)) {
         continue;
@@ -272,7 +272,7 @@ mb_write_vehicle($pkgDir . $menuFile, [
         'menuindex' => 0,
         'params' => '',
         'handler' => '',
-        'permissions' => '',
+        'permissions' => 'managerbuttons',
         'namespace' => PKG_NAME_LOWER,
     ]),
 ]);

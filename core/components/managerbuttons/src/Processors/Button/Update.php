@@ -2,6 +2,7 @@
 
 namespace ManagerButtons\Processors\Button;
 
+use ManagerButtons\Icons;
 use ManagerButtons\Model\Button;
 use ManagerButtons\Processors\ProcessorBase;
 
@@ -23,7 +24,7 @@ class Update extends ProcessorBase
         $button->fromArray([
             'name' => $name,
             'url' => $url,
-            'icon' => trim((string) $this->getProperty('icon', $button->get('icon'))),
+            'icon' => Icons::normalizeName((string) $this->getProperty('icon', $button->get('icon'))),
             'cols' => $this->service->normalizeCols($this->getProperty('cols', $button->get('cols'))),
         ]);
         if (!$button->save()) {

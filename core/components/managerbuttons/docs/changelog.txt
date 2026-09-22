@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0-pl] - 2026-09-22
+
+### Added
+- Full Font Awesome 5 icon set from the MODX 3 manager
+- managerbuttons permission on the Administrator policy
+- Bulk delete, search, and pagination
+- Widget property group_id
+
 ## [1.0.0-pl] - 2026-09-21
 
 ### Added

@@ -2,6 +2,7 @@
 
 namespace ManagerButtons\Processors\Button;
 
+use ManagerButtons\Icons;
 use ManagerButtons\Model\Button;
 use ManagerButtons\Model\ButtonGroup;
 use ManagerButtons\Processors\ProcessorBase;
@@ -26,7 +27,7 @@ class Create extends ProcessorBase
             'group_id' => $groupId,
             'name' => $name,
             'url' => $url,
-            'icon' => trim((string) $this->getProperty('icon', '')),
+            'icon' => Icons::normalizeName((string) $this->getProperty('icon', '')),
             'cols' => $this->service->normalizeCols($this->getProperty('cols', 1)),
             'rank' => $this->service->nextButtonRank($groupId),
         ], '', true);
