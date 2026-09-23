@@ -1,39 +1,36 @@
 # ManagerButtons
 
-Компонент для MODX Revolution 3: наборы кнопок и ссылок на панели управления.
+Группы кнопок и ссылок на панели управления MODX 3.
 
-Похож по задаче на Quickstart Buttons, сделан для MODX 3 и оформлен через **VueTools** (тема PrimeVue берётся из `vuetools.theme`, своих стилей нет).
+Набор выглядит как сетка из четырёх колонок. Кнопка ведёт в раздел менеджера или на внешний адрес. Кто видит набор, задаётся группами пользователей: администраторы видят все наборы.
+
+Интерфейс собран на [VueTools](https://modx.pro/components/25759). Тема берётся из настройки `vuetools.theme`.
 
 ## Требования
 
 - MODX 3.0+
 - PHP 8.1+
-- [VueTools](https://modx.pro/components/25759) 1.2.0+
+- VueTools 1.2.0+
 
 ## Установка
 
 1. Установите VueTools.
-2. Скачайте `ManagerButtons-1.2.1-pl.transport.zip` из [`_packages/`](_packages/).
-3. В менеджере: **Приложения → Установщик → Загрузить пакет** и установите zip.
+2. Возьмите `ManagerButtons-1.2.1-pl.transport.zip` из [`_packages/`](_packages/).
+3. В менеджере откройте **Приложения → Установщик**, загрузите архив и установите пакет.
 
-После установки:
+В меню **Приложения** появится пункт **ManagerButtons**. На дашборд Default ставится виджет с тем же именем. Если пункта меню нет, выйдите из панели и войдите снова.
 
-- пункт меню **ManagerButtons** (администраторы и право `managerbuttons`);
-- виджет **ManagerButtons** (ставится на дашборд Default).
+Инструкция: [docs.modx.pro/components/managerbuttons](https://docs.modx.pro/components/managerbuttons). Текст для магазина и превью лежат в [`docs/modstore/`](docs/modstore/).
 
-Если пункта меню нет, выйдите из панели и войдите снова: право записывается в политику Administrator во время установки.
-
-## Сборка пакета новой версии
+## Сборка
 
 ```bash
 cd vueManager && npm install && npm run build && cd ..
 php _build/pack.php
 ```
 
-Zip появится в `_packages/`. Для следующей доработки увеличьте версию в `_build/config.inc.php` и `core/components/managerbuttons/src/Service.php`.
+Версия задаётся в `_build/config.inc.php` и `core/components/managerbuttons/src/Service.php`.
 
 ## Лицензия
 
-MIT. См. [LICENSE](LICENSE).
-
-Документация для [docs.modx.pro](https://docs.modx.pro/): каталог [`docs/modx.pro/`](docs/modx.pro/).
+MIT. Текст лицензии: [LICENSE](LICENSE).

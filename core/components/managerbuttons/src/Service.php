@@ -46,10 +46,6 @@ class Service
     }
 
     /**
-     * Lexicon strings for the Vue UI, read from the component files.
-     * The manager topic cache can keep an older copy after an upgrade, so the
-     * page does not depend on MODx.lang for these captions.
-     *
      * @return array<string, string>
      */
     public function lexiconEntries(): array
@@ -106,10 +102,6 @@ class Service
         return $user->isMember(self::ADMIN_GROUP);
     }
 
-    /**
-     * Settings page and connectors. Administrators always pass.
-     * Other manager users pass when the managerbuttons permission is granted.
-     */
     public function canManage(): bool
     {
         $user = $this->modx->user;
@@ -243,8 +235,7 @@ class Service
     }
 
     /**
-     * RANK is reserved in MySQL 8. xPDO writes sortby columns verbatim, so
-     * ORDER BY rank is a syntax error and the saved row never reaches the list.
+     * rank is reserved in MySQL 8, so the column is quoted.
      */
     public function applyRankOrder(object $query): void
     {

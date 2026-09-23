@@ -28,6 +28,8 @@ export function buttonStyle(button, appearance) {
     textAlign: 'left',
     display: 'grid',
     gridTemplateColumns: 'auto 1fr',
+    height: '100%',
+    alignContent: 'start',
     background,
     color,
     borderColor: background,

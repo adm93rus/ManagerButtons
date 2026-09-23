@@ -1,38 +1,11 @@
-# Changelog
+ManagerButtons 1.2.1-pl
+22 сентября 2026
 
-## [1.2.1-pl] - 2026-09-22
+Первый публичный выпуск.
 
-### Fixed
-- Button list caption for the description column is taken from the component lexicon files, so a stale manager lexicon cache no longer shows the raw key
-- Edit and delete actions on a button row use the manager Font Awesome icons
-
-## [1.2.0-pl] - 2026-09-22
-
-### Added
-- Button description under the title
-- Per-button background color
-- General settings for the default background and text color. With no background, buttons are blue with white text
-
-## [1.1.1-pl] - 2026-09-22
-
-### Fixed
-- Groups saved to the database stayed out of the list on MySQL 8 and MariaDB: rank is reserved, and unquoted ORDER BY rank / MAX(rank) failed
-- Manager page padding, toolbar spacing, and create dialogs follow the VueTools sample
-
-## [1.1.0-pl] - 2026-09-22
-
-### Added
-- Full Font Awesome 5 icon set from the MODX 3 manager
-- managerbuttons permission on the Administrator policy
-- Bulk delete, search, and pagination
-- Widget property group_id
-
-## [1.0.0-pl] - 2026-09-21
-
-### Added
-- Button groups with a 4-column dashboard grid
-- Access control by MODX user groups (Administrators always have access)
-- Buttons with name, link, Font Awesome 5 icon, and width from 1 to 4 columns
-- Export and import of a group as JSON (move to another site or duplicate)
-- VueTools-based manager UI and dashboard widget (theme from `vuetools.theme`)
-- MIT license
+- Группы кнопок на панели управления, сетка из четырёх колонок
+- Доступ по группам пользователей: администраторы видят все наборы
+- Название, ссылка, иконка, ширина, описание и свой цвет кнопки
+- Общий цвет фона и текста
+- Экспорт и импорт набора
+- Виджет на панели управления
